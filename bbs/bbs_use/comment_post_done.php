@@ -33,7 +33,7 @@
 					$comment = htmlspecialchars($_POST['comment'],ENT_QUOTES,'UTF-8');
 					$gazou_name = htmlspecialchars($_POST['gazou_name'],ENT_QUOTES,'UTF-8');
 
-					$dsn = 'mysql:dbname=bbs;host=localhost;charset=utf8';
+					$dsn = 'mysql:dbname=tt1601_bbs;host=localhost;charset=utf8';
 					$user = 'root';
 					$password = '';
 					$dbh = new PDO($dsn,$user,$password);

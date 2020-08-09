@@ -13,7 +13,7 @@
 				$name = htmlspecialchars($_POST['name'],ENT_QUOTES,'UTF-8');
 				$pass1 = htmlspecialchars($_POST['pass1'],ENT_QUOTES,'UTF-8');
 
-				$dsn = 'mysql:dbname=bbs;host=localhost;charset=utf8';
+				$dsn = 'mysql:dbname=tt1601_bbs;host=localhost;charset=utf8';
 				$user = 'root';
 				$password = '';
 				$dbh = new PDO($dsn,$user,$password);

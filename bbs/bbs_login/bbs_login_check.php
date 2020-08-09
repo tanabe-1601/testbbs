@@ -5,7 +5,7 @@
 
 		$pass = md5($pass);
 
-		$dsn = 'mysql:dbname=bbs;host=localhost;charset=utf8';
+		$dsn = 'mysql:dbname=tt1601_bbs;host=localhost;charset=utf8';
 		$user = 'root';
 		$password = '';
 		$dbh = new PDO($dsn,$user,$password);
