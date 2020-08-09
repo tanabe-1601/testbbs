@@ -1,7 +1,0 @@
-INSERT INTO tbl_name (col_name1, col_name2, ...) VALUES (value1, value2, ...)
-
-INSERT INTO post_tbl (name, comment) VALUES ('testname1', 'testcomment1')
-
-INSERT INTO post_tbl (name, comment) VALUES ('名無しさん', 'テストコメント')
-
-INSERT INTO post_tbl (name, email, comment) VALUES ('名無しさん', 'sage', 'テストコメント')
