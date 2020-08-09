@@ -39,19 +39,36 @@
 					$dbh = new PDO($dsn,$user,$password);
 					$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-					// 書き込み番号を取得し、画像ファイルの名前を書き込み番号に変更する
-					$sql = 'SELECT * FROM post_tbl ORDER BY code DESC LIMIT 1';
-					$stmt = $dbh->prepare($sql);
-					$stmt->execute();
+					// 画像ファイルがある時だけ処理
+					if ($gazou_name != '') {
+						// post_tblにレコードが1件でもあるか確認
+						$sql = 'SELECT COUNT(*) FROM post_tbl';
+						$stmt = $dbh->prepare($sql);
+						$stmt->execute();
 
-					$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-					// 画像ファイルのファイル名にする
-					$code = $rec['code'];
-					$file_extension = substr($gazou_name, strrpos($gazou_name, '.'));
-					$insert_gazou_name = $code.$file_extension;
+						$post_tbl_count = $stmt->fetch(PDO::FETCH_ASSOC);
 
-					// 画像ファイル名を書き込み番号に置き換える
-					rename('./gazou/'.$gazou_name,'./gazou/'.$insert_gazou_name);
+						if ($post_tbl_count > 0) {
+							// 書き込み番号を取得し、画像ファイルの名前を書き込み番号に変更する
+							$sql = 'SELECT * FROM post_tbl ORDER BY code DESC LIMIT 1';
+							$stmt = $dbh->prepare($sql);
+							$stmt->execute();
+
+							$rec = $stmt->fetch(PDO::FETCH_ASSOC);
+							// 画像ファイルのファイル名にする
+							$code = $rec['code'];
+
+						} else {
+							$code = 1;
+
+						}
+
+						$file_extension = substr($gazou_name, strrpos($gazou_name, '.'));
+						$insert_gazou_name = $code.$file_extension;
+	
+						// 画像ファイル名を書き込み番号に置き換える
+						rename('./gazou/'.$gazou_name,'./gazou/'.$insert_gazou_name);
+					}
 
 					// 書き込みをDBに追加
 					$sql = 'INSERT INTO post_tbl (name, email, comment, file_name) VALUES (?,?,?,?)';
