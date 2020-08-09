@@ -73,7 +73,7 @@
 			}
 		?>
 
-		<a href="bbs.php">掲示板に戻る</a>
+		<a href="./bbs.php">掲示板に戻る</a>
 
 	</body>
 </html>

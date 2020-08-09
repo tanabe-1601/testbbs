@@ -29,7 +29,7 @@
 				$dbh = null;
 
 				print 'ユーザー登録が完了しました。<br/>';
-				print '<a href="bbs_login.php">BBSログイン画面</a><br/>';
+				print '<a href="../bbs_login/bbs_login.php">BBSログイン画面</a><br/>';
 
 			} catch (Exception $e) {
 				print '障害発生中です<br/>';

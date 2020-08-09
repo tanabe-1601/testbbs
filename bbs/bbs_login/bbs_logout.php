@@ -6,6 +6,6 @@
 	}
 	session_destroy();
 
-	header('Location: bbs_login.php');
+	header('Location: ./bbs_login.php');
 	exit();
 ?>
