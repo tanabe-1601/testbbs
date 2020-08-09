@@ -29,7 +29,7 @@
 			try {
 				$dsn = 'mysql:dbname=tt1601_bbs;host=localhost;charset=utf8';
 				$user = 'root';
-				$password = '';
+				$password = 'testBbs0809';
 				$dbh = new PDO($dsn,$user,$password);
 				$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
