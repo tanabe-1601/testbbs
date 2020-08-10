@@ -61,6 +61,8 @@
 						$gazou_ramdom_name .= substr($gazou['name'], strrpos($gazou['name'], '.'));
 						move_uploaded_file($gazou['tmp_name'],'./gazou/'.$gazou_ramdom_name);
 						print '<img src="./gazou/'.$gazou_ramdom_name.'"><br/>';
+					} else {
+						$gazou_ramdom_name = '';
 					}
 
 					print '<form method="post" action="comment_post_done.php">';
