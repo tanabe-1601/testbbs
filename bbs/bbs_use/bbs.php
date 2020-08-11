@@ -47,6 +47,7 @@
 					}
 					$code = $rec['code'];
 					$name = $rec['name'];
+					$email = $rec['email'];
 					$date = $rec['date'];
 					$comment = $rec['comment'];
 					$file_name = $rec['file_name'];
@@ -55,7 +56,11 @@
 					$week_format = '('.$week_name[date('w',strtotime($date))].') ';
 					$date_format = date('Y/m/d',strtotime($date)).$week_format.date('h:m:s',strtotime($date));
 
-					print $code.' 名前 '.$name.' '.$date_format.'<br/>';
+					if ($email != '') {
+						print $code.' 名前 <a href="mailto:'.$email.'">'.$name.'</a> '.$date_format.'<br/>';
+					} else {
+						print $code.' 名前 '.$name.' '.$date_format.'<br/>';
+					}
 					print nl2br($comment).'<br/>';
 					print '<br/>';
 					if ($file_name != '') {
