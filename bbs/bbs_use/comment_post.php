@@ -41,7 +41,6 @@
 					print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 				} else {
 					if ($name == '') {
-						// $name = '名無しさん';
 						$name = $_SESSION['name'];
 					}
 					print '名前：'.$name.'</br>';
