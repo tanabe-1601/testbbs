@@ -1,7 +1,8 @@
 <?php
 	try {
-		$name = htmlspecialchars($_POST['name'],ENT_QUOTES,'UTF-8');
-		$pass = htmlspecialchars($_POST['pass'],ENT_QUOTES,'UTF-8');
+		require_once '../common/escape.php';
+		$name = escape($_POST['name']);
+		$pass = escape($_POST['pass']);
 
 		$pass = md5($pass);
 
