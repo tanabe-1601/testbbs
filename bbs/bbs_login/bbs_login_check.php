@@ -5,11 +5,8 @@
 
 		$pass = md5($pass);
 
-		$dsn = 'mysql:dbname=tt1601_bbs;host=localhost;charset=utf8';
-		$user = 'tt1601_bbs';
-		$password = 'testBbs0809';
-		$dbh = new PDO($dsn,$user,$password);
-		$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+		require_once '../common/db_common.php';
+		$dbh = getDb();
 
 		$sql = 'SELECT * FROM user_tbl WHERE name=? AND password=?';
 		$data = array();
