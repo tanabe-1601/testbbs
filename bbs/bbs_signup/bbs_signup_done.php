@@ -10,8 +10,9 @@
 		<br/>
 		<?php
 			try {
-				$name = htmlspecialchars($_POST['name'],ENT_QUOTES,'UTF-8');
-				$pass1 = htmlspecialchars($_POST['pass1'],ENT_QUOTES,'UTF-8');
+				require_once '../common/escape.php';
+				$name = escape($_POST['name']);
+				$pass1 = escape($_POST['pass1']);
 
 				require_once '../common/db_common.php';
 				$dbh = getDb();

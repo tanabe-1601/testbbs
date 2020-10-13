@@ -28,9 +28,10 @@
 				print '入力が不正です。<br/>';
 				print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 			} else {
-				$name = htmlspecialchars($_POST['name'],ENT_QUOTES,'UTF-8');
-				$email = htmlspecialchars($_POST['email'],ENT_QUOTES,'UTF-8');
-				$comment = htmlspecialchars($_POST['comment'],ENT_QUOTES,'UTF-8');
+				require_once '../common/escape.php';
+				$name = escape($_POST['name']);
+				$email = escape($_POST['email']);
+				$comment = escape($_POST['comment']);
 				$gazou = $_FILES['gazou'];
 
 				if ($comment == ''){

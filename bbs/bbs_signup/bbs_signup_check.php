@@ -9,9 +9,10 @@
 		<h1>BBSユーザー登録</h1>
 		<br/>
 		<?php
-			$name = htmlspecialchars($_POST['name'],ENT_QUOTES,'UTF-8');
-			$pass1 = htmlspecialchars($_POST['pass1'],ENT_QUOTES,'UTF-8');
-			$pass2 = htmlspecialchars($_POST['pass2'],ENT_QUOTES,'UTF-8');
+			require_once '../common/escape.php';
+			$name = escape($_POST['name']);
+			$pass1 = escape($_POST['pass1']);
+			$pass2 = escape($_POST['pass2']);
 
 			if ($name == '' or $pass1 == '' or $pass2 == '' or $pass1 != $pass2) {
 
