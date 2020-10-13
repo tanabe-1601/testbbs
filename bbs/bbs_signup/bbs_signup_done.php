@@ -13,11 +13,8 @@
 				$name = htmlspecialchars($_POST['name'],ENT_QUOTES,'UTF-8');
 				$pass1 = htmlspecialchars($_POST['pass1'],ENT_QUOTES,'UTF-8');
 
-				$dsn = 'mysql:dbname=tt1601_bbs;host=localhost;charset=utf8';
-				$user = 'tt1601_bbs';
-				$password = 'testBbs0809';
-				$dbh = new PDO($dsn,$user,$password);
-				$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+				require_once '../common/db_common.php';
+				$dbh = getDb();
 
 				$sql = 'INSERT INTO user_tbl (name, password) VALUES (?,?)';
 				$data = array();

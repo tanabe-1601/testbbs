@@ -33,11 +33,8 @@
 					$comment = htmlspecialchars($_POST['comment'],ENT_QUOTES,'UTF-8');
 					$gazou_name = htmlspecialchars($_POST['gazou_name'],ENT_QUOTES,'UTF-8');
 
-					$dsn = 'mysql:dbname=tt1601_bbs;host=localhost;charset=utf8';
-					$user = 'tt1601_bbs';
-					$password = 'testBbs0809';
-					$dbh = new PDO($dsn,$user,$password);
-					$dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+					require_once '../common/db_common.php';
+					$dbh = getDb();
 
 					// 画像ファイルがある時だけ処理
 					if ($gazou_name != '') {
