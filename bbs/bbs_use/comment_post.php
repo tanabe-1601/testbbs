@@ -28,19 +28,24 @@
 				print '入力が不正です。<br/>';
 				print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 			} else {
+				// ポストデータをエスケープ処理
 				require_once '../common/escape.php';
 				$name = escape($_POST['name']);
 				$email = escape($_POST['email']);
 				$comment = escape($_POST['comment']);
 				$gazou = $_FILES['gazou'];
 
+				// 入力内容チェック
 				if ($comment == ''){
+					// コメント入力チェック
 					print 'コメントを入力してください。<br/>';
 					print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 				} elseif ($gazou['size'] > 1000000) {
+					// 添付ファイルのファイルサイズチェック
 					print '画像が大きすぎます。<br/>';
 					print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 				} else {
+					// どちらも問題なければ入力内容を表示
 					if ($name == '') {
 						$name = $_SESSION['name'];
 					}
@@ -54,23 +59,26 @@
 					print nl2br($comment).'</br>';
 					print '<br/>';
 
+					$gazou_ramdom_name = '';
 					if ($gazou['size'] > 0) {
 						print '添付ファイル<br/>';
-						// ランダム文字列を作成して画像ファイルの一時的なファイル名にする
+						// ランダム文字列を取得(仮のファイル名にする)
 						$gazou_ramdom_name = substr(bin2hex(random_bytes(8)), 0, 8);
-						// 画像ファイルの拡張子を取得して一時的なファイル名の末尾に加える
-						$gazou_ramdom_name .= substr($gazou['name'], strrpos($gazou['name'], '.'));
-						move_uploaded_file($gazou['tmp_name'],'./gazou/'.$gazou_ramdom_name);
-						print '<img src="./gazou/'.$gazou_ramdom_name.'"><br/>';
-					} else {
-						$gazou_ramdom_name = '';
+						// 画像ファイル名の拡張子を取得
+						$gazou_extension = pathinfo($gazou['name'], PATHINFO_EXTENSION);
+						// ランダム文字列と拡張子を結合して、画像ファイルの仮のファイル名にする
+						$file_name = $gazou_ramdom_name . '.' . $gazou_extension;
+						// 一時ファイルの名前を、仮のファイル名にリネームする
+						move_uploaded_file($gazou['tmp_name'],'./gazou/'.$file_name);
+						// 画像ファイルを表示するimgタグをプリント
+						print '<img src="./gazou/'.$file_name.'"><br/>';
 					}
 
 					print '<form method="post" action="comment_post_done.php">';
 						print '<input type="hidden" name="name" value="'.$name.'">';
 						print '<input type="hidden" name="email" value="'.$email.'">';
 						print '<input type="hidden" name="comment" value="'.$comment.'">';
-						print '<input type="hidden" name="gazou_name" value="'.$gazou_ramdom_name.'">';
+						print '<input type="hidden" name="gazou_name" value="'.$file_name.'">';
 						print '<p><input class="button" type="submit" value="投稿"></p>';
 						print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 					print '</form>';
