@@ -24,48 +24,24 @@
 	<body>
 		<?php
 			try {
+				// ポストデータがあるかチェック
 				if (empty($_POST) == true) {
 					print '入力が不正です。<br/>';
 					print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 				} else {
+					// ポストデータをエスケープ処理
 					require_once '../common/escape.php';
 					$name = escape($_POST['name']);
 					$email = escape($_POST['email']);
 					$comment = escape($_POST['comment']);
 					$gazou_name = escape($_POST['gazou_name']);
 
+					// ファイル名があれば、変数に拡張子を代入し、なければ空文字を代入
+					$file_extension = $gazou_name != '' ? pathinfo($gazou_name, PATHINFO_EXTENSION) : '';
+
+					// DB接続
 					require_once '../common/db_common.php';
 					$dbh = getDb();
-
-					// 画像ファイルがある時だけ処理
-					if ($gazou_name != '') {
-						// post_tblにレコードが1件でもあるか確認
-						$sql = 'SELECT COUNT(*) FROM post_tbl';
-						$stmt = $dbh->prepare($sql);
-						$stmt->execute();
-
-						$post_tbl_count = $stmt->fetch(PDO::FETCH_ASSOC);
-
-						if ($post_tbl_count['COUNT(*)'] > 0) {
-							// 書き込み番号を取得し、画像ファイルの名前を書き込み番号に変更する
-							$sql = 'SELECT * FROM post_tbl ORDER BY code DESC LIMIT 1';
-							$stmt = $dbh->prepare($sql);
-							$stmt->execute();
-
-							$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-							// 画像ファイルのファイル名にする
-							$code = $rec['code'];
-						} else {
-							$code = 1;
-						}
-
-						$file_extension = substr($gazou_name, strrpos($gazou_name, '.'));
-						if ($file_extension != '') {
-							$insert_gazou_name = $code.$file_extension;
-							// 画像ファイル名を書き込み番号に置き換える
-							rename('./gazou/'.$gazou_name,'./gazou/'.$insert_gazou_name);
-						}
-					}
 
 					// 書き込みをDBに追加
 					$sql = 'INSERT INTO post_tbl (name, email, comment, file_name) VALUES (?,?,?,?)';
@@ -73,21 +49,27 @@
 					$data[] = $name;
 					$data[] = $email;
 					$data[] = $comment;
+					$data[] = $file_extension;
 
-					if (isset($insert_gazou_name) == false) {
-						$insert_gazou_name = '';
-					}
-
-					$data[] = $insert_gazou_name;
 					$stmt = $dbh->prepare($sql);
 					$stmt->execute($data);
 
-					$dbh = null;
+					// 一時的な画像ファイル名を書き込み番号に変更
+					if ($file_extension != '') {
+						// 書き込み番号を取得
+						$lii = $dbh->lastInsertId();
+						// 書き込み番号と拡張子を結合して、画像ファイル名を作成
+						$new_file_name = $lii . '.' . $file_extension;
+						// 画像ファイル名を書き込み番号に置き換える
+						rename('./gazou/'.$gazou_name, './gazou/'.$new_file_name);
+					}
+
+					$dbh = null;	// DB切断
 
 					print '書き込みしました。<br/>';
 				}
 			} catch (Exception $e) {
-				print '障害発生中';
+				print $e;
 				exit();
 			}
 		?>

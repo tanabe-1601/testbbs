@@ -30,40 +30,44 @@
 				require_once '../common/db_common.php';
 				$dbh = getDb();
 
-				$sql = 'SELECT * FROM post_tbl ORDER BY code DESC';
-				$stmt = $dbh->prepare($sql);
-				$stmt->execute();
+				// 最新のコメントデータを5行取得
+				$sql = 'SELECT * FROM post_tbl ORDER BY code DESC LIMIT 5';
+				$stmt = $dbh->query($sql);
 
 				// 曜日表示用
 				$week_name = array("日", "月", "火", "水", "木", "金", "土");
 
-				for ($i=0; $i < 5; $i++) {
-					$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-					if($rec == false){
-						break;
-					}
+				$stmt->setFetchMode(PDO::FETCH_ASSOC);	// フェッチモードを連想配列に設定
+				foreach ($stmt as $rec) {
 					$code = $rec['code'];
 					$name = $rec['name'];
 					$email = $rec['email'];
 					$date = $rec['date'];
 					$comment = $rec['comment'];
-					$file_name = $rec['file_name'];
+					$file_extension = $rec['file_name'];	// DBに登録されているのは拡張子
 
 					// 日時データを表示用に変換
 					$week_format = '('.$week_name[date('w',strtotime($date))].') ';
 					$date_format = date('Y/m/d',strtotime($date)).$week_format.date('h:m:s',strtotime($date));
 
+					// メールアドレスの表示
 					if ($email != '') {
 						print $code.' 名前 <a href="mailto:'.$email.'">'.$name.'</a> '.$date_format.'<br/>';
 					} else {
 						print $code.' 名前 '.$name.' '.$date_format.'<br/>';
 					}
+
+					// コメント表示
 					print nl2br($comment).'<br/>';
 					print '<br/>';
-					if ($file_name != '') {
-						$file_extension = substr($file_name, strrpos($file_name, '.'));
+
+					// 添付ファイルの表示
+					if ($file_extension != '') {
+						// ファイル名を作成(書き込み番号+拡張子)
+						$file_name = $code . '.' . $file_extension;
+						// 拡張子ごとに処理を分岐
 						switch ($file_extension) {
-							case '.jpg':
+							case 'jpg':
 								print '<a href="./gazou/'.$file_name.'"><img src="./gazou/'.$file_name.'"></a><br/>';
 								print '<br/>';
 								break;
@@ -88,7 +92,7 @@
 				print '</form>';
 			}
 			catch (Exception $e) {
-				print '障害発生中';
+				print $e;
 				exit();
 			}
 		?>
