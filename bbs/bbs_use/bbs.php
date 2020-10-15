@@ -38,6 +38,7 @@
 				$week_name = array("日", "月", "火", "水", "木", "金", "土");
 
 				$stmt->setFetchMode(PDO::FETCH_ASSOC);	// フェッチモードを連想配列に設定
+				require_once '../common/file_strage.php';	// 添付ファイル保存パスの定数をインクルード
 				foreach ($stmt as $rec) {
 					$code = $rec['code'];
 					$name = $rec['name'];
@@ -68,12 +69,12 @@
 						// 拡張子ごとに処理を分岐
 						switch ($file_extension) {
 							case 'jpg':
-								print '<a href="./gazou/'.$file_name.'"><img src="./gazou/'.$file_name.'"></a><br/>';
+								print '<a href="' . FILE_STRAGE . $file_name.'"><img src="' . FILE_STRAGE . $file_name.'"></a><br/>';
 								print '<br/>';
 								break;
 
 							default:
-								print '<a href="./gazou/'.$file_name.'">添付ファイルダウンロード</a><br/>';
+								print '<a href="' . FILE_STRAGE . $file_name . '">添付ファイルダウンロード</a><br/>';
 								print '<br/>';
 								break;
 						}

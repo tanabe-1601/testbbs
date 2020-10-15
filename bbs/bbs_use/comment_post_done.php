@@ -60,8 +60,10 @@
 						$lii = $dbh->lastInsertId();
 						// 書き込み番号と拡張子を結合して、画像ファイル名を作成
 						$new_file_name = $lii . '.' . $file_extension;
+						// 添付ファイル保存パスの定数をインクルード
+						require_once '../common/file_strage.php';
 						// 画像ファイル名を書き込み番号に置き換える
-						rename('./gazou/'.$gazou_name, './gazou/'.$new_file_name);
+						rename(FILE_STRAGE . $gazou_name, FILE_STRAGE . $new_file_name);
 					}
 
 					$dbh = null;	// DB切断
