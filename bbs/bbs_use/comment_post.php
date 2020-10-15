@@ -68,10 +68,12 @@
 						$gazou_extension = pathinfo($gazou['name'], PATHINFO_EXTENSION);
 						// ランダム文字列と拡張子を結合して、画像ファイルの仮のファイル名にする
 						$file_name = $gazou_ramdom_name . '.' . $gazou_extension;
+						// 添付ファイル保存パスの定数をインクルード
+						require_once '../common/file_strage.php';
 						// 一時ファイルの名前を、仮のファイル名にリネームする
-						move_uploaded_file($gazou['tmp_name'],'./gazou/'.$file_name);
+						move_uploaded_file($gazou['tmp_name'], FILE_STRAGE . $file_name);
 						// 画像ファイルを表示するimgタグをプリント
-						print '<img src="./gazou/'.$file_name.'"><br/>';
+						print '<img src="' . FILE_STRAGE . $file_name . '"><br/>';
 					}
 
 					print '<form method="post" action="comment_post_done.php">';
