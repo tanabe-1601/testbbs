@@ -1,12 +1,12 @@
 <?php
 	try {
-		require_once '../common/escape.php';
+		require_once '../../../common/escape.php';
 		$name = escape($_POST['name']);
 		$pass = escape($_POST['pass']);
 
 		$pass = md5($pass);
 
-		require_once '../common/db_common.php';
+		require_once '../../../common/db_common.php';
 		$dbh = getDb();
 
 		$sql = 'SELECT * FROM user_tbl WHERE name=? AND password=?';

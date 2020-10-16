@@ -29,7 +29,7 @@
 				print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 			} else {
 				// ポストデータをエスケープ処理
-				require_once '../common/escape.php';
+				require_once '../../../common/escape.php';
 				$name = escape($_POST['name']);
 				$email = escape($_POST['email']);
 				$comment = escape($_POST['comment']);
@@ -69,7 +69,7 @@
 						// ランダム文字列と拡張子を結合して、画像ファイルの仮のファイル名にする
 						$file_name = $gazou_ramdom_name . '.' . $gazou_extension;
 						// 添付ファイル保存パスの定数をインクルード
-						require_once '../common/file_strage.php';
+						require_once '../../../common/file_strage.php';
 						// 一時ファイルの名前を、仮のファイル名にリネームする
 						move_uploaded_file($gazou['tmp_name'], FILE_STRAGE . $file_name);
 						// 画像ファイルを表示するimgタグをプリント

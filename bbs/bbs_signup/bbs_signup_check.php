@@ -9,7 +9,7 @@
 		<h1>BBSユーザー登録</h1>
 		<br/>
 		<?php
-			require_once '../common/escape.php';
+			require_once '../../../common/escape.php';
 			$name = escape($_POST['name']);
 			$pass1 = escape($_POST['pass1']);
 			$pass2 = escape($_POST['pass2']);

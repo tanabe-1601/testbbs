@@ -10,11 +10,11 @@
 		<br/>
 		<?php
 			try {
-				require_once '../common/escape.php';
+				require_once '../../../common/escape.php';
 				$name = escape($_POST['name']);
 				$pass1 = escape($_POST['pass1']);
 
-				require_once '../common/db_common.php';
+				require_once '../../../common/db_common.php';
 				$dbh = getDb();
 
 				$sql = 'INSERT INTO user_tbl (name, password) VALUES (?,?)';

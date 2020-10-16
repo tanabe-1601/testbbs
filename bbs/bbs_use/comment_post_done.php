@@ -30,7 +30,7 @@
 					print '<p><input class="button" type="button" onclick="history.back()" value="戻る"></p>';
 				} else {
 					// ポストデータをエスケープ処理
-					require_once '../common/escape.php';
+					require_once '../../../common/escape.php';
 					$name = escape($_POST['name']);
 					$email = escape($_POST['email']);
 					$comment = escape($_POST['comment']);
@@ -40,7 +40,7 @@
 					$file_extension = $gazou_name != '' ? pathinfo($gazou_name, PATHINFO_EXTENSION) : '';
 
 					// DB接続
-					require_once '../common/db_common.php';
+					require_once '../../../common/db_common.php';
 					$dbh = getDb();
 
 					// 書き込みをDBに追加
@@ -61,7 +61,7 @@
 						// 書き込み番号と拡張子を結合して、画像ファイル名を作成
 						$new_file_name = $lii . '.' . $file_extension;
 						// 添付ファイル保存パスの定数をインクルード
-						require_once '../common/file_strage.php';
+						require_once '../../../common/file_strage.php';
 						// 画像ファイル名を書き込み番号に置き換える
 						rename(FILE_STRAGE . $gazou_name, FILE_STRAGE . $new_file_name);
 					}

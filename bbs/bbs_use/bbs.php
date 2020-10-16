@@ -27,7 +27,7 @@
 
 		<?php
 			try {
-				require_once '../common/db_common.php';
+				require_once '../../../common/db_common.php';
 				$dbh = getDb();
 
 				// 最新のコメントデータを5行取得
@@ -38,7 +38,7 @@
 				$week_name = array("日", "月", "火", "水", "木", "金", "土");
 
 				$stmt->setFetchMode(PDO::FETCH_ASSOC);	// フェッチモードを連想配列に設定
-				require_once '../common/file_strage.php';	// 添付ファイル保存パスの定数をインクルード
+				require_once '../../../common/file_strage.php';	// 添付ファイル保存パスの定数をインクルード
 				foreach ($stmt as $rec) {
 					$code = $rec['code'];
 					$name = $rec['name'];
